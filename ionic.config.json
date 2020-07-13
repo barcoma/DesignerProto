@@ -1,0 +1,7 @@
+{
+  "name": "DesignerProto",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
