@@ -1,0 +1,12 @@
+type Todo @model {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type Product @model{
+  id: ID!
+  name: String!
+  img: String!
+}
+
