@@ -30,7 +30,7 @@ export class HomePage {
   this.MockProducts = [
     {
       name: 'shampoo',
-      img: '../../assets/img/shampoobottle.jpg',
+      img: '../../assets/img/shampoobottle.png',
       descr: 'blassasdasdad'
     },
     {

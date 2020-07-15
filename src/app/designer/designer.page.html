@@ -11,14 +11,11 @@
 <ion-content>
   <ion-grid class="ion-no-padding">
     <ion-row>
-      <ion-col class="img-col ion-align-items-center" size-md="8" offset-md="2" size-sm="10" offset-sm="1">
-        <div class="img-wrapper ion-align-items-center">
-          <img [src]="img">
-          <!-- <div class="ion-canvas">
-            <canvas #canvas></canvas>
-        </div> -->
+      <ion-col  class="ion-padding img-col ion-align-items-center" size-md="8" offset-md="2" size-sm="10" offset-sm="1">
+        <div #ImageWrapper class="img-wrapper ion-align-items-center">
+          <img #ProductImage [src]="img">
+          <canvas #canvas></canvas>
         </div>
-        
       </ion-col>
     </ion-row>
     <ion-row>
