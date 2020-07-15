@@ -11,21 +11,45 @@
 <ion-content>
   <ion-grid class="ion-no-padding">
     <ion-row>
-      <ion-col  class="ion-padding img-col ion-align-items-center" size-md="8" offset-md="2" size-sm="10" offset-sm="1">
+      <ion-col size="6" offset="3" class="ion-padding img-col">
         <div #ImageWrapper class="img-wrapper ion-align-items-center">
           <img #ProductImage [src]="img">
           <canvas #canvas></canvas>
         </div>
       </ion-col>
+      <ion-col size="3" size-md="1">
+        <ion-button class="ion-no-margin action-button" (click)="pictureMethod('increeseSize')">
+          <ion-icon name="add-circle-outline"></ion-icon>
+        </ion-button>
+        <ion-button class="ion-no-margin action-button" (click)="pictureMethod('decreeseSize')">
+          <ion-icon name="remove-circle-outline"></ion-icon>        
+        </ion-button>
+        <ion-range 
+          pin min="0" 
+          max="359" 
+          step="1" 
+          color="secondary"
+          style="padding-top: 30px; --height: 30px"
+          [disabled]="projectService.selectedTopLevelItems().length !== 1"
+          [(ngModel)]="projectService.rotation"
+          (keydown)="$event.stopPropagation()"
+          (ionChange)="projectService.rotateSelectedItems($event)">
+          <ion-label slot="start">0</ion-label>
+          <ion-label slot="end">359</ion-label>
+        </ion-range>
+        <ion-button class="ion-no-margin action-button" (click)="pictureMethod('delete')">
+          <ion-icon name="close-circle-outline"></ion-icon>        
+        </ion-button>
+      </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size-sm="12" size-md="6" offset-md="3" class="ion-text-center">
+      <ion-col size-sm="8" offset-sm="2" size-md="6" offset-md="3" class="ion-text-center">
         <h3 class="ion-no-margin">{{descr}}</h3>
       </ion-col>
     </ion-row>
     <ion-row class="ion-margin-top">
       <ion-col size-sm="4" size-md="1" offset-md="4" class="ion-no-padding">
-        <ion-button class="ion-no-margin action-button" (click)="onClick()">
+        <ion-button class="ion-no-margin action-button" (click)="genText()">
           <ion-icon name="text-outline"></ion-icon>
         </ion-button>
       </ion-col>
@@ -35,7 +59,7 @@
         </ion-button>
       </ion-col>
       <ion-col size-sm="4" size-md="1" class="ion-no-padding">
-        <ion-button class="ion-no-margin action-button" (click)="onClick()">
+        <ion-button class="ion-no-margin action-button" (click)="addShape('triangle')">
           <ion-icon name="shapes-outline"></ion-icon>        
         </ion-button>
       </ion-col>

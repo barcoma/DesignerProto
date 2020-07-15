@@ -1,0 +1,10 @@
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>{{'enterText'|translate}}</mat-label>
+        <input #textInput matInput [(ngModel)]="data.text" (keyup.enter)="onSubmit(data)" cdkFocusInitial>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Abort</button>
+    <button mat-button [mat-dialog-close]="data">Ok</button>
+</div>
