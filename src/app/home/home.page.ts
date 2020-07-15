@@ -31,22 +31,38 @@ export class HomePage {
     {
       name: 'shampoo',
       img: '../../assets/img/shampoobottle.png',
-      descr: 'blassasdasdad'
+      descr: 'blassasdasdad',
+      zoneX: 50,
+      zoneY: 100,
+      zoneXScale: .8,
+      zoneYScale: .5
     },
     {
       name: 'Tasse',
       img: '../../assets/img/tasse.jpg',
-      descr: 'blassasdasdad'
+      descr: 'blassasdasdad',
+      zoneX: 50,
+      zoneY: 100,
+      zoneXScale: .8,
+      zoneYScale: .5
     },
     {
       name: 'Pinsel',
       img: '../../assets/img/lov.png',
-      descr: 'blassasdasdad'
+      descr: 'blassasdasdad',
+      zoneX: 300,
+      zoneY: 50,
+      zoneXScale: .32,
+      zoneYScale: .4
     },
     {
       name: 'shampoo',
       img: '../../assets/img/shampoobottle.jpg',
-      descr: 'blassasdasdad'
+      descr: 'blassasdasdad',
+      zoneX: 50,
+      zoneY: 100,
+      zoneXScale: .8,
+      zoneYScale: .5
     },
   ];
   }
@@ -114,7 +130,11 @@ export class HomePage {
     const navigationExtras: NavigationExtras = {
       state: {
         img: this.MockProducts[id].img,
-        desc: this.MockProducts[id].descr
+        desc: this.MockProducts[id].descr,
+        zoneX: this.MockProducts[id].zoneX,
+        zoneY: this.MockProducts[id].zoneY,
+        zoneXScale: this.MockProducts[id].zoneXScale,
+        zoneYScale: this.MockProducts[id].zoneYScale
       }
     };
     this.router.navigate(['designer'], navigationExtras);
@@ -132,13 +152,6 @@ isUserLoggedIn(){
           (reject) => {this.loggedIn =  false; }
     );
   }
-  // END TODO
-
-  // logOut(){
-  //   Auth.signOut();
-
-  //   this.loggedIn = false;
-  // }
 
   async logOut() {
     const alert = await this.alertController.create({
