@@ -1,0 +1,57 @@
+ion-grid {
+  height: 100%;
+  width: 100%;
+}
+
+ion-toolbar {
+  --background: var(--ion-color-dark);
+}
+
+#checkbox * {
+  --background: var(--ion-color-dark);
+}
+
+.delete-checkbox {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+
+.picture-grid {
+  ion-col {
+    .img-wrapper {
+      background: #ffffff;
+      border: 1px solid var(--ion-color-dark);
+      height: 100%;
+      width: 100%;
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+      }
+      ion-icon.addIcon {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  ion-col.addImage {
+    height: 30vh;
+  }
+
+  ion-col.chooseImage {
+    height: 30vh;
+  }
+
+  ion-col ion-icon.deleteIcon {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.add-image {
+  height: 100%;
+  width: 100%;
+}

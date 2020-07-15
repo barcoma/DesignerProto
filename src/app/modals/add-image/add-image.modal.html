@@ -1,0 +1,65 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title color="light">Images</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-button size="large" color="light" (click)="dismissModal()" fill="clear" class="back-button">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <!--
+    <ion-buttons slot="end" id="checkbox">
+      <ion-item>
+        <ion-checkbox slot="start" color="light" [(ngModel)]="deleteImagesFlag"></ion-checkbox>
+        <ion-label color="light">deleteMode</ion-label>
+      </ion-item>
+    </ion-buttons>
+    -->
+
+    <ion-buttons slot="end" id="checkbox">
+      <button (click)="fileInput.click()" mat-flat-button>
+        <ion-icon slot="icon-only" color="light" name="cloud-upload-outline"></ion-icon>
+        &nbsp;Upload
+      </button>
+      <button style="margin: 0px 16px;" (click)="deleteImages()" [disabled]="selectedImages.length === 0" mat-flat-button>
+        <ion-icon slot="icon-only" color="light" [ngStyle]="{'color': '#7F7F7F'}" name="trash-outline"></ion-icon>
+        &nbsp;Delete Selected
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-grid>
+    <ion-row>
+      <ion-col style="text-align: center;">
+        <h5 style="color: #ffffff;" *ngIf="!deleteImagesFlag">Select or Add</h5>
+        <h5 style="color: #ffffff;" *ngIf="deleteImagesFlag">Delete</h5>
+      </ion-col>
+    </ion-row>
+    <ion-row class="picture-grid">
+      
+      <ion-col class="addImage" size="3" *ngIf="!deleteImagesFlag">
+        <div class="img-wrapper" (click)="fileInput.click()">
+          <ion-icon class="addIcon" color="primary" name="add"></ion-icon>
+          <input type="file" accept="image/svg+xml" (change)="cacheFile($event, 'images')" style="visibility: hidden;" #fileInput multiple>
+        </div>
+      </ion-col>
+     
+      <ion-col class="chooseImage" *ngFor="let img of sharedService.dbTables['images']" size="3">
+        <h1>hello</h1>
+        <div class="img-wrapper" style="z-index: 500;" (click)="useImage(img)">
+          <span title="{{img.key}}">
+            <ion-icon class="deleteIcon" color="danger" name="close" *ngIf="deleteImagesFlag"></ion-icon>
+            <img [src]="img.value | safeHtml: 'resourceUrl'" alt="{{img.key}}">
+          </span>
+          <div style="padding: 12px 16px 12px 16px;" appClickStopPropagation>
+            <ion-checkbox class="delete-checkbox" (ionChange)="selectImage(img, $event);" (click)="$event.stopPropagation();" slot="start" color="dark" appClickStopPropagation></ion-checkbox>
+          </div>
+        </div>
+      </ion-col>
+      <input type="file" accept="image/svg+xml" (change)="cacheFile($event, 'images')" style="visibility: hidden;" #fileInput multiple>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,11 +1,12 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import * as paper from 'paper';
+import { MatSelectChange } from '@angular/material';
 import { Color, PaperScope, Project } from 'paper';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, HostListener, NgZone, OnInit, ViewChild } from '@angular/core';
 import {AlertController, LoadingController, ModalController, NavController, PopoverController} from '@ionic/angular';
 import * as hash from 'object-hash';
-// import { AddImageModalComponent } from 'src/app/modals/add-image/add-image.modal';
+import { AddImageModalComponent } from 'src/app/modals/add-image/add-image.modal';
 import { GeometricsService } from 'src/app/services/geometrics.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { environment } from 'src/environments/environment';
@@ -223,6 +224,8 @@ addShape(type: string) {
     }
   }
 
+
+
   onSubmit(id: string) {
     document.getElementById(id).blur();
   }
@@ -236,14 +239,7 @@ addShape(type: string) {
     };
     if (!this.projectService.canvas.hitTest(event.point, hitOptions)) {
       this.projectService.deselectAll();
-    } else if (this.selectedHatchSettings && this.selectedToolView === 'hatchSettings') {
-      this.projectService.applyHatchSettingsToPosition(event.point, this.selectedHatchSettings);
-      event.stopPropagation();
     }
-  }
-
-  onHatchSettingsSelected(hatchSettings: HatchSettings) {
-    this.selectedHatchSettings = hatchSettings;
   }
 
   onLayerItemClicked(item: paper.Item, event: MouseEvent) {
@@ -329,55 +325,9 @@ addShape(type: string) {
     this.projectService.translateSelectedItems(dx, dy);
   }
 
-  async openBarcodeModal() {
-    const modal = await this.modalController.create({
-      component: AddCodeComponent,
-      componentProps: {
-        type: 'barcode',
-      },
-    });
-    modal.present();
-  }
-
-  async openAddQrCodeModal() {
-    const modal = await this.modalController.create({
-      component: AddCodeComponent,
-      componentProps: {
-        type: 'qrCode',
-      },
-    });
-    modal.present();
-  }
-
   async openAddImageModal() {
     const modal = await this.modalController.create({
       component: AddImageModalComponent,
-    });
-    modal.present();
-  }
-
-  async addFontModal() {
-    const modal = await this.modalController.create({
-      component: AddFontModalComponent,
-    });
-    modal.present();
-
-    await modal.onWillDismiss().then(({ data }) => {
-      // EMPTY
-    });
-  }
-
-  async openHatchingPreviewModal(hatchlineOpcodes: string[], outlineOpcodes: string[], canvasWidth: number, canvasHeight: number) {
-    const modal = await this.modalController.create({
-      component: HatchingPreviewModalComponent,
-      componentProps: { hatchlineOpcodes, outlineOpcodes, canvasWidth, canvasHeight },
-    });
-    modal.present();
-  }
-
-  async openParameterMatrix() {
-    const modal = await this.modalController.create({
-      component: ParameterMatrixComponent,
     });
     modal.present();
   }

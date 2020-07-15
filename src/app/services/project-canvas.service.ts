@@ -34,7 +34,8 @@ export class ProjectCanvasService {
   constructor(
     private sharedService: SharedService,
     private toastService: ToastService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private dialog: MatDialog
   ) {}
 
   get focusItemOutlineSettings(): OutlineSettings {
@@ -111,27 +112,27 @@ export class ProjectCanvasService {
     }
   }
 
-  // openEditTextDialog(item): void {
-  //   this.ngZone.run(() => {
-  //     const dialogRef = this.dialog.open(EditTextDialogComponent, {
-  //       width: '250px',
-  //       data: { text: item.lastChild['content'] },
-  //       disableClose: false,
-  //     });
+  openEditTextDialog(item): void {
+    this.ngZone.run(() => {
+      const dialogRef = this.dialog.open(EditTextDialogComponent, {
+        width: '250px',
+        data: { text: item.lastChild['content'] },
+        disableClose: false,
+      });
 
-  //     dialogRef.afterClosed().subscribe((result) => {
-  //       if (result) {
-  //         if (result.text !== '') {
-  //           item.lastChild['content'] = result.text;
-  //           item.data.description = result.text;
-  //           this.updateTextSelectionHelper(item);
-  //         } else {
-  //           this.openEditTextDialog(item);
-  //         }
-  //       }
-  //     });
-  //   });
-  // }
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          if (result.text !== '') {
+            item.lastChild['content'] = result.text;
+            item.data.description = result.text;
+            this.updateTextSelectionHelper(item);
+          } else {
+            this.openEditTextDialog(item);
+          }
+        }
+      });
+    });
+  }
 
   /**
    * Updates the selection helpers bounds of the given text group.

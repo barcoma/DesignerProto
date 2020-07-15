@@ -1,4 +1,3 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -14,17 +13,52 @@ import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
 import Amplify from 'aws-amplify';
 import awsconfig from '../aws-exports';
 
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { File } from '@ionic-native/file/ngx';
+import { EditTextDialogComponent } from './dialogs/editText.dialog';
+import { MaterialModule } from './material.module';
+import { AddImageModalComponent } from './modals/add-image/add-image.modal';
+
 Amplify.configure(awsconfig);
 
+export class MyHammerConfig extends HammerGestureConfig {
+  overrides = {
+    press: { time: 1500 },
+  };
+}
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [AmplifyUIAngularModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  declarations: [
+    AppComponent,
+    AddImageModalComponent,
+    EditTextDialogComponent
+  ],
+  entryComponents: [
+    AddImageModalComponent,
+    EditTextDialogComponent
+  ],
+  imports: [
+    AmplifyUIAngularModule,
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    MaterialModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatIconModule
+  ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    File,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig }
   ],
   bootstrap: [AppComponent]
 })
