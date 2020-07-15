@@ -127,7 +127,6 @@ async testUserLoggedIn(){
 isUserLoggedIn(){
     Auth.currentAuthenticatedUser()
     .then((resolve) => {
-      console.log(resolve);
       this.loggedIn = true;
     },
           (reject) => {this.loggedIn =  false; }
