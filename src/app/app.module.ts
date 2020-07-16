@@ -23,6 +23,8 @@ import { File } from '@ionic-native/file/ngx';
 import { EditTextDialogComponent } from './dialogs/editText.dialog';
 import { MaterialModule } from './material.module';
 import { AddImageModalComponent } from './modals/add-image/add-image.modal';
+import { SettingsModalComponent } from './modals/settings/settings.modal';
+
 import { PipesModule } from './pipes/pipes.module';
 
 
@@ -38,10 +40,12 @@ export class MyHammerConfig extends HammerGestureConfig {
   declarations: [
     AppComponent,
     AddImageModalComponent,
+    SettingsModalComponent,
     EditTextDialogComponent
   ],
   entryComponents: [
     AddImageModalComponent,
+    SettingsModalComponent,
     EditTextDialogComponent
   ],
   imports: [

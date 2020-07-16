@@ -1,0 +1,32 @@
+ion-grid {
+  height: 100%;
+  width: 100%;
+}
+
+ion-item{
+  --background: transparent;
+  --border-color: #fff; 
+}
+
+ion-content {
+  padding-bottom: 10vh;
+}
+
+ion-label{
+  --color: white;
+}
+
+.settings-header {
+  font-weight: bold;
+  padding: 2vh 0 0vh 0;
+}
+
+ion-button{
+  height: 100%;
+  width: 100%;
+}
+
+ion-toolbar {
+  --background: var(--ion-color-dark);
+}
+

@@ -73,20 +73,59 @@ export type CreateProductInput = {
   id?: string | null;
   name: string;
   img: string;
+  descr?: string | null;
+  zoneX?: number | null;
+  zoneY?: number | null;
+  zoneXScale?: number | null;
+  zoneYScale?: number | null;
 };
 
 export type ModelProductConditionInput = {
   name?: ModelStringInput | null;
   img?: ModelStringInput | null;
+  descr?: ModelStringInput | null;
+  zoneX?: ModelIntInput | null;
+  zoneY?: ModelIntInput | null;
+  zoneXScale?: ModelFloatInput | null;
+  zoneYScale?: ModelFloatInput | null;
   and?: Array<ModelProductConditionInput | null> | null;
   or?: Array<ModelProductConditionInput | null> | null;
   not?: ModelProductConditionInput | null;
+};
+
+export type ModelIntInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
+export type ModelFloatInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
 };
 
 export type UpdateProductInput = {
   id: string;
   name?: string | null;
   img?: string | null;
+  descr?: string | null;
+  zoneX?: number | null;
+  zoneY?: number | null;
+  zoneXScale?: number | null;
+  zoneYScale?: number | null;
 };
 
 export type DeleteProductInput = {
@@ -122,6 +161,11 @@ export type ModelProductFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
   img?: ModelStringInput | null;
+  descr?: ModelStringInput | null;
+  zoneX?: ModelIntInput | null;
+  zoneY?: ModelIntInput | null;
+  zoneXScale?: ModelFloatInput | null;
+  zoneYScale?: ModelFloatInput | null;
   and?: Array<ModelProductFilterInput | null> | null;
   or?: Array<ModelProductFilterInput | null> | null;
   not?: ModelProductFilterInput | null;
@@ -159,6 +203,11 @@ export type CreateProductMutation = {
   id: string;
   name: string;
   img: string;
+  descr: string | null;
+  zoneX: number | null;
+  zoneY: number | null;
+  zoneXScale: number | null;
+  zoneYScale: number | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -168,6 +217,11 @@ export type UpdateProductMutation = {
   id: string;
   name: string;
   img: string;
+  descr: string | null;
+  zoneX: number | null;
+  zoneY: number | null;
+  zoneXScale: number | null;
+  zoneYScale: number | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -177,6 +231,11 @@ export type DeleteProductMutation = {
   id: string;
   name: string;
   img: string;
+  descr: string | null;
+  zoneX: number | null;
+  zoneY: number | null;
+  zoneXScale: number | null;
+  zoneYScale: number | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -208,6 +267,11 @@ export type GetProductQuery = {
   id: string;
   name: string;
   img: string;
+  descr: string | null;
+  zoneX: number | null;
+  zoneY: number | null;
+  zoneXScale: number | null;
+  zoneYScale: number | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -219,6 +283,11 @@ export type ListProductsQuery = {
     id: string;
     name: string;
     img: string;
+    descr: string | null;
+    zoneX: number | null;
+    zoneY: number | null;
+    zoneXScale: number | null;
+    zoneYScale: number | null;
     createdAt: string;
     updatedAt: string;
   } | null> | null;
@@ -257,6 +326,11 @@ export type OnCreateProductSubscription = {
   id: string;
   name: string;
   img: string;
+  descr: string | null;
+  zoneX: number | null;
+  zoneY: number | null;
+  zoneXScale: number | null;
+  zoneYScale: number | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -266,6 +340,11 @@ export type OnUpdateProductSubscription = {
   id: string;
   name: string;
   img: string;
+  descr: string | null;
+  zoneX: number | null;
+  zoneY: number | null;
+  zoneXScale: number | null;
+  zoneYScale: number | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -275,6 +354,11 @@ export type OnDeleteProductSubscription = {
   id: string;
   name: string;
   img: string;
+  descr: string | null;
+  zoneX: number | null;
+  zoneY: number | null;
+  zoneXScale: number | null;
+  zoneYScale: number | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -368,6 +452,11 @@ export class APIService {
           id
           name
           img
+          descr
+          zoneX
+          zoneY
+          zoneXScale
+          zoneYScale
           createdAt
           updatedAt
         }
@@ -393,6 +482,11 @@ export class APIService {
           id
           name
           img
+          descr
+          zoneX
+          zoneY
+          zoneXScale
+          zoneYScale
           createdAt
           updatedAt
         }
@@ -418,6 +512,11 @@ export class APIService {
           id
           name
           img
+          descr
+          zoneX
+          zoneY
+          zoneXScale
+          zoneYScale
           createdAt
           updatedAt
         }
@@ -493,6 +592,11 @@ export class APIService {
           id
           name
           img
+          descr
+          zoneX
+          zoneY
+          zoneXScale
+          zoneYScale
           createdAt
           updatedAt
         }
@@ -518,6 +622,11 @@ export class APIService {
             id
             name
             img
+            descr
+            zoneX
+            zoneY
+            zoneXScale
+            zoneYScale
             createdAt
             updatedAt
           }
@@ -594,6 +703,11 @@ export class APIService {
           id
           name
           img
+          descr
+          zoneX
+          zoneY
+          zoneXScale
+          zoneYScale
           createdAt
           updatedAt
         }
@@ -611,6 +725,11 @@ export class APIService {
           id
           name
           img
+          descr
+          zoneX
+          zoneY
+          zoneXScale
+          zoneYScale
           createdAt
           updatedAt
         }
@@ -628,6 +747,11 @@ export class APIService {
           id
           name
           img
+          descr
+          zoneX
+          zoneY
+          zoneXScale
+          zoneYScale
           createdAt
           updatedAt
         }

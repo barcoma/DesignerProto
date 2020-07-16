@@ -12,6 +12,8 @@ import { ProjectCanvasService } from './services/project-canvas.service';
 import { SharedService } from './services/shared.service';
 import { StorageService } from './services/storage.service';
 import { ToastService } from './services/toast.service';
+import { SettingsModalComponent } from './modals/settings/settings.modal';
+
 
 const { CapacitorDataStorageSqlite, Device } = Plugins;
 
@@ -119,6 +121,13 @@ export class AppComponent implements AfterViewInit {
     },
           (reject) => {}
     );
+  }
+
+  async openSettingsModal() {
+    const modal = await this.modalController.create({
+      component: SettingsModalComponent,
+    });
+    modal.present();
   }
 
 

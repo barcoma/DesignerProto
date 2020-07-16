@@ -27,8 +27,8 @@ canvas{
     --border-radius: 0;
     height: 100%;
     width: 100%;
-    --border-color: #000;
-    border-right: 1px solid black !important;
+    --border-color: #fff;
+    border-right: 1px solid #fff !important;
     ion-icon{
         font-size: 2.4em;
     }
@@ -75,9 +75,73 @@ canvas{
     }
 }
 
+.rotation-label{
+    font-size: 1em;
+}
+
+ion-select{
+    background: rgba(255,255,255,.5) !important;
+    margin-top: 5%;
+    margin-left: 5%;
+    border-radius: 15px;
+    padding-right: 2%;
+}
+
+.text-input{
+    margin-right: 5%;
+    --background: transparent;
+}
+
+.new-text-input{
+    background: rgba(255,255,255,.5) !important;
+    margin: 5%;
+    border-radius: 15px;
+    width: 90%;
+}
+
 .last-row{
     position: absolute;
     height: 10%;
     width: 100%;
     top: 85%;
+}
+
+.function-button-col{
+    display: flex;
+    align-items: center;
+    ion-col{
+        height: 10vh;
+    }
+}
+
+.big-icon{
+    ion-icon{
+        height: 100% !important;
+        width: 50% !important;
+    }
+}
+
+.function-button{
+    height: 80%;
+}
+
+.dual-button-l{
+    margin: 0 !important;
+    width: 100%;
+    --border-color: #fff;
+    border-right: 3px solid #fff !important;
+    --border-radius: 5px 0 0 5px;
+    --padding-end: 0;
+    --padding-start: 0;
+}
+
+.dual-button-r{
+    width: 100%;
+    --border-radius: 0 5px 5px 0;
+    --padding-end: 0;
+    --padding-start: 0;
+}
+
+.full-width-button{
+    width: 100%;
 }

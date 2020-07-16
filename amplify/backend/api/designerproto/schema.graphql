@@ -7,6 +7,11 @@ type Todo @model {
 type Product @model{
   id: ID!
   name: String!
-  img: String!
+  img: String!,
+  descr: String,
+  zoneX: Int,
+  zoneY: Int,
+  zoneXScale: Float,
+  zoneYScale: Float
 }
 

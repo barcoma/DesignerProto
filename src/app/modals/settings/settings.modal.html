@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="light">Settings</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-button size="large" color="light" (click)="dismissModal()" fill="clear" class="back-button">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+            <h1>General</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+          <ion-item>
+            <ion-label position="floating">Step Size</ion-label>              
+            <ion-input id="stepSizeSet" [(ngModel)]="sharedService.settings.stepsize" (blur)="minMaxEnforce('stepSizeSet')" (input)="updateSettings($event, 'stepSize')" matInput
+                     style="color: black;" type="number" min="1" (keyup.enter)="onSubmit('stepSizeSet')">
+                    </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Scaling Factors</ion-label>              
+            <ion-input id="scalingFactorSet" [(ngModel)]="sharedService.settings.scalingFactor" (blur)="minMaxEnforce('scalingFactorSet')" (input)="updateSettings($event, 'scalingFactor')" matInput
+            style="color: black;" type="number" min="1" (keyup.enter)="onSubmit('scalingFactorSet')"></ion-input>
+          </ion-item>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row>
+      <ion-col size="3" offset="1">
+          <ion-button expand="full" (click)="deleteLogs()">{{'deleteLogs'}}</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">
+          <ion-button expand="full" (click)="loadLogs()">{{'downloadLogs'}}</ion-button>
+      </ion-col>
+    </ion-row> -->
+  </ion-grid>
+
+</ion-content>

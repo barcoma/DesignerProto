@@ -33,6 +33,7 @@
     "@material/layout-grid": "^6.0.0",
     "@mdi/angular-material": "^5.0.45",
     "aws-amplify": "^3.0.20",
+    "file-saver": "^2.0.2",
     "fs": "0.0.1-security",
     "material-design-icons": "^3.0.1",
     "moment": "^2.27.0",

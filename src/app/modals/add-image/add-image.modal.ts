@@ -71,7 +71,7 @@ export class AddImageModalComponent implements OnInit {
     }).forEach((item: paper.Item) => {
       item.strokeColor = new Color(0);
       item.strokeWidth = 1;
-      item.fillColor = new Color(1, 0.001);
+      item.fillColor = new Color(0, 0, 0);
     });
 
     group.data.description = file.key;

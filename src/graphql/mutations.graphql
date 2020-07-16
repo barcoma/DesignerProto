@@ -43,6 +43,11 @@ mutation CreateProduct(
     id
     name
     img
+    descr
+    zoneX
+    zoneY
+    zoneXScale
+    zoneYScale
     createdAt
     updatedAt
   }
@@ -55,6 +60,11 @@ mutation UpdateProduct(
     id
     name
     img
+    descr
+    zoneX
+    zoneY
+    zoneXScale
+    zoneYScale
     createdAt
     updatedAt
   }
@@ -67,6 +77,11 @@ mutation DeleteProduct(
     id
     name
     img
+    descr
+    zoneX
+    zoneY
+    zoneXScale
+    zoneYScale
     createdAt
     updatedAt
   }

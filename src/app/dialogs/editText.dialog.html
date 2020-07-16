@@ -1,8 +1,6 @@
 <div mat-dialog-content>
-    <mat-form-field>
-        <mat-label>Enter Text</mat-label>
-        <input #textInput matInput [(ngModel)]="data.text" (keyup.enter)="onSubmit(data)" cdkFocusInitial>
-    </mat-form-field>
+        <ion-label>Enter Text</ion-label>
+        <ion-input #textInput matInput [(ngModel)]="data.text" (keyup.enter)="onSubmit(data)" cdkFocusInitial></ion-input>
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Abort</button>

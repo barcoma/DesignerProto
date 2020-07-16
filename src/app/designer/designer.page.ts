@@ -1,4 +1,4 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import * as paper from 'paper';
 import { MatSelectChange } from '@angular/material';
 import { Color, PaperScope, Project } from 'paper';
@@ -30,7 +30,7 @@ export class DesignerPage{
   private _CONTEXT: any;
 
   img: any;
-  descr: any;
+  imgName: any;
   sub: any;
   // Relative Breite der Zone zum Bild
   zoneXScale: any;
@@ -41,6 +41,8 @@ export class DesignerPage{
   zoneY: any;
   shapeSelectionOpen = false;
   openRotationHandle = false;
+  isTextEditOpen = false;
+  newTextInput: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -62,19 +64,19 @@ export class DesignerPage{
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.img = this.router.getCurrentNavigation().extras.state.img;
-        this.descr = this.router.getCurrentNavigation().extras.state.descr;
+        this.imgName = this.router.getCurrentNavigation().extras.state.name;
         this.zoneX = this.router.getCurrentNavigation().extras.state.zoneX;
         this.zoneY = this.router.getCurrentNavigation().extras.state.zoneY;
         this.zoneXScale = this.router.getCurrentNavigation().extras.state.zoneXScale;
         this.zoneYScale = this.router.getCurrentNavigation().extras.state.zoneYScale;
       }
     });
-    this.img = '../../assets/img/shampoobottle.png';
-    this.descr = 'Shampoo';
-    this.zoneX = 50;
-    this.zoneY = 100;
-    this.zoneXScale = .8;
-    this.zoneYScale = .5;
+    // this.img = '../../assets/img/shampoobottle.png';
+    // this.descr = 'Shampoo';
+    // this.zoneX = 50;
+    // this.zoneY = 100;
+    // this.zoneXScale = .8;
+    // this.zoneYScale = .5;
   }
 
   ionViewDidEnter(){
@@ -124,8 +126,11 @@ setupCanvas(){
 
 scaleCanvas(){
   console.log(this.zoneXScale, this.zoneYScale);
-  this._CANVAS.height *= this.zoneYScale;
-  this._CANVAS.width *= this.zoneXScale;
+  let newHeight = this._CANVAS.height * this.zoneYScale;
+  let newWidth = this._CANVAS.width * this.zoneXScale;
+  console.log(newWidth);
+  this._CANVAS.height = newHeight;
+  this._CANVAS.width = newWidth;
   this._CANVAS.style.top = this.zoneY;
   this._CANVAS.style.left = this.zoneX;
   console.log(this._CANVAS);
@@ -169,7 +174,8 @@ addShape(type: string) {
 }
 
 rotateItem(){
-  this.openRotationHandle = !this.openRotationHandle
+  this.openRotationHandle = !this.openRotationHandle;
+  this.isTextEditOpen = false;
 }
 
 toggleshapeSelectionOpen(){
@@ -219,8 +225,7 @@ toggleshapeSelectionOpen(){
       case 'Enter':
         if (this.projectService.selectedTopLevelItems().length === 1) {
           if (
-            this.projectService.selectedTopLevelItems()[0].data.type === 'text' &&
-            !this.projectService.selectedTopLevelItems()[0].data.isAutomaticLaserCounter
+            this.projectService.selectedTopLevelItems()[0].data.type === 'text'
           ) {
             // Need to deselect the item else you open another dialog with enter on text-input
             const selectedItem = this.projectService.selectedTopLevelItems()[0];
@@ -238,7 +243,18 @@ toggleshapeSelectionOpen(){
     }
   }
 
-
+  changeText(){
+    if (this.projectService.selectedTopLevelItems().length === 1) {
+      if (
+        this.projectService.selectedTopLevelItems()[0].data.type === 'text'
+      ) {
+        // Need to deselect the item else you open another dialog with enter on text-input
+        const selectedItem = this.projectService.selectedTopLevelItems()[0];
+        this.projectService.openEditTextDialog(selectedItem, this.newTextInput);
+      }
+    }
+    this.isTextEditOpen = false;
+  }
 
   onSubmit(id: string) {
     document.getElementById(id).blur();
@@ -253,6 +269,8 @@ toggleshapeSelectionOpen(){
     };
     if (!this.projectService.canvas.hitTest(event.point, hitOptions)) {
       this.projectService.deselectAll();
+      this.isTextEditOpen = false;
+      this.openRotationHandle = false;
     }
   }
 
@@ -346,22 +364,6 @@ toggleshapeSelectionOpen(){
     modal.present();
   }
 
-  private getItemsWithoutGroups(items?: paper.Item[]): paper.Item[] {
-    if (items === undefined) {
-      items = this.projectService.canvas.activeLayer.children;
-    }
-
-    const result: paper.Item[] = [];
-    for (const item of items) {
-      if (item.data.type === 'group') {
-        result.push(...this.getItemsWithoutGroups(item.children));
-      } else {
-        result.push(item);
-      }
-    }
-    return result;
-  }
-
   onLayerListItemDrop(event: CdkDragDrop<string[]>) {
     const children = this.projectService.canvas.activeLayer.children;
     // Get elements from straight array
@@ -421,7 +423,7 @@ toggleshapeSelectionOpen(){
     }
     text.data.fontFamilyMerged = text.data.fontFamily + ' ' + text.data.fontSubfamily;
     text.fontFamily = text.data.fontFamilyMerged;
-    this.projectService.updateTextSelectionHelper(item);    
+    this.projectService.updateTextSelectionHelper(item);
   }
 
   lockRatio() {
@@ -508,7 +510,7 @@ toggleshapeSelectionOpen(){
   genText() {
     const text = new paper.PointText(this.projectService.canvas.view.center);
     text.justification = 'left';
-    text.fillColor = null;
+    text.fillColor =  new Color(0, 0, 0);
     text.content = 'Your Text...';
     text.fontFamily = 'Arial Regular';
     text.data.fontFamily = 'Arial';
@@ -559,4 +561,50 @@ toggleshapeSelectionOpen(){
     }
   }
 
+  openTextEdit(){
+    this.isTextEditOpen = !this.isTextEditOpen;
+    this.openRotationHandle = false;
+  }
+
+  async generateBarcode() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Ready to personalise?',
+      message: 'Enter a short description and save as Barcode to scan at the next location',
+      inputs: [
+        {
+          name: 'description',
+          placeholder: 'short description'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+          }
+        }, {
+          text: 'Save',
+          handler: (data) => {
+            this.openAndSaveBarcode(data.description);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  openAndSaveBarcode(descr){
+    console.log(descr);
+    const navigationExtras: NavigationExtras = {
+      state: {
+        name: this.imgName,
+        desc: descr,
+        img: this.img
+      }
+    };
+    this.router.navigate(['/barcodes'], navigationExtras);
+  }
 }

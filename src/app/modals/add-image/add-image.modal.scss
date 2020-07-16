@@ -7,6 +7,16 @@ ion-toolbar {
   --background: var(--ion-color-dark);
 }
 
+.big-icon{
+  ion-icon{
+      height: 100% !important;
+      width: 50% !important;
+  }
+}
+
+.header-row{
+}
+
 #checkbox * {
   --background: var(--ion-color-dark);
 }
@@ -15,6 +25,14 @@ ion-toolbar {
   position: absolute;
   top: 16px;
   left: 16px;
+}
+
+.delete-selected{
+  background: red;
+  width: 100%;
+  margin: 0;
+  --padding-end: 0;
+  --padding-start: 0;
 }
 
 .picture-grid {
@@ -37,11 +55,11 @@ ion-toolbar {
   }
 
   ion-col.addImage {
-    height: 30vh;
+    height: 16vh;
   }
 
   ion-col.chooseImage {
-    height: 30vh;
+    height: 16vh;
   }
 
   ion-col ion-icon.deleteIcon {

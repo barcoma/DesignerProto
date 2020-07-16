@@ -27,44 +27,6 @@ export class HomePage {
     this.onAuthEvent(payload);
   });
 
-  this.MockProducts = [
-    {
-      name: 'shampoo',
-      img: '../../assets/img/shampoobottle.png',
-      descr: 'blassasdasdad',
-      zoneX: 50,
-      zoneY: 100,
-      zoneXScale: .8,
-      zoneYScale: .5
-    },
-    {
-      name: 'Tasse',
-      img: '../../assets/img/tasse.jpg',
-      descr: 'blassasdasdad',
-      zoneX: 50,
-      zoneY: 100,
-      zoneXScale: .8,
-      zoneYScale: .5
-    },
-    {
-      name: 'Pinsel',
-      img: '../../assets/img/lov.png',
-      descr: 'blassasdasdad',
-      zoneX: 300,
-      zoneY: 50,
-      zoneXScale: .32,
-      zoneYScale: .4
-    },
-    {
-      name: 'shampoo',
-      img: '../../assets/img/shampoobottle.jpg',
-      descr: 'blassasdasdad',
-      zoneX: 50,
-      zoneY: 100,
-      zoneXScale: .8,
-      zoneYScale: .5
-    },
-  ];
   }
 
   @ViewChild('slides', { read: IonSlides }) slides: IonSlides;
@@ -81,7 +43,7 @@ export class HomePage {
         this.loggedIn = true;
         break;
       case 'signOut':
-        this.loggedIn = false;
+        this.router.navigate(['/login']);
         break;
     }
   }
@@ -89,25 +51,14 @@ export class HomePage {
   async ionViewWillEnter() {
     await this.isUserLoggedIn();
 
-    this.apiService.ListTodos().then((evt) => {
-      this.todos = evt.items;
-    });
-    this.apiService.OnCreateTodoListener.subscribe((evt) => {
-      const data = (evt as any).value.data.onCreateTodo;
-      this.todos = [...this.todos, data];
-    });
-
     this.apiService.ListProducts().then((evt) => {
       this.products = evt.items;
+      console.log(this.products);
     });
     this.apiService.OnCreateProductListener.subscribe((evt) => {
       const data = (evt as any).value.data.onCreateProduct;
       this.products = [...this.products, data];
     });
-  }
-
-  createProduct(){
-    this.apiService.DeleteProduct({id: this.products[0].id});
   }
 
   logImg(){
@@ -130,7 +81,7 @@ export class HomePage {
     const navigationExtras: NavigationExtras = {
       state: {
         img: this.MockProducts[id].img,
-        desc: this.MockProducts[id].descr,
+        name: this.MockProducts[id].name,
         zoneX: this.MockProducts[id].zoneX,
         zoneY: this.MockProducts[id].zoneY,
         zoneXScale: this.MockProducts[id].zoneXScale,

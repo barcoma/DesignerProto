@@ -29,6 +29,11 @@ query GetProduct($id: ID!) {
     id
     name
     img
+    descr
+    zoneX
+    zoneY
+    zoneXScale
+    zoneYScale
     createdAt
     updatedAt
   }
@@ -43,6 +48,11 @@ query ListProducts(
       id
       name
       img
+      descr
+      zoneX
+      zoneY
+      zoneXScale
+      zoneYScale
       createdAt
       updatedAt
     }

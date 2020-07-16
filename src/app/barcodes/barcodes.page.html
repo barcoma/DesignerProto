@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Your Products</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Ready for Personalization:
+    </ion-list-header>
+
+    <ion-item *ngFor="let b of barcodes">
+      <ion-avatar slot="start">
+        <img [src]="b.img">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{b.name}}</h2>
+        <p>{{b.descr}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

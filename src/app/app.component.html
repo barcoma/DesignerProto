@@ -5,12 +5,28 @@
       <ion-content>
   
         <ion-list id="menu">
-          <ion-list-header> <h1>Hello, </h1> <h5 class="username">{{userName}}</h5> </ion-list-header>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none"
-              detail="false" [class.selected]="selectedIndex == i">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+          <ion-list-header> <h1>Hello </h1> </ion-list-header>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" lines="none"
+              detail="false">
+              <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+              <ion-label>Profil</ion-label>
+            </ion-item>
+            <hr>
+            <ion-item routerDirection="root" routerLink="/home" lines="none"
+              detail="false">
+              <ion-icon slot="start" name="copy-outline"></ion-icon>
+              <ion-label>Select a Product</ion-label>
+            </ion-item>
+            <ion-item routerDirection="root" routerLink="/barcodes" lines="none"
+              detail="false">
+              <ion-icon slot="start" name="list-outline"></ion-icon>
+              <ion-label>Your Products</ion-label>
+            </ion-item>
+            <ion-item (click)="openSettingsModal()" lines="none"
+              detail="false">
+              <ion-icon slot="start" name="settings"></ion-icon>
+              <ion-label>Settings</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
