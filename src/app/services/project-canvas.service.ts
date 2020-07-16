@@ -262,6 +262,7 @@ export class ProjectCanvasService {
   }
 
   rotateSelectedItems(value: CustomEvent<{ value: number }> | MatSelectChange | number) {
+    console.log(typeof value);
     if (!this.noItemsSelected() && !this.multiSelect()) {
       for (const item of this.selectedTopLevelItems()) {
         const prevRotation = item.data.prevRotation || 0;
@@ -317,13 +318,6 @@ export class ProjectCanvasService {
         }
       } else {
         item.scale(horizontalScale, verticalScale, center);
-        if (item.data.type === 'rect') {
-          item.rotate(-Math.abs(item.data.prevRotation), item.data.center);
-          item.data.width = item.bounds.width.toFixed(0);
-          item.data.height = item.bounds.height.toFixed(0);
-          item.rotate(item.data.prevRotation, item.data.center);
-        }
-        // TODO: Update circle, triangle and line size
       }
     }
   }

@@ -39,6 +39,8 @@ export class DesignerPage{
   // Zonenstartpunkte - oberes linkes Eck der Zone verschoben um x und y vom oberen linken Eck des Bilds
   zoneX: any;
   zoneY: any;
+  shapeSelectionOpen = false;
+  openRotationHandle = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -87,7 +89,7 @@ export class DesignerPage{
       this.projectService.canvas = new Project(this._CANVAS);
       this.projectService.canvas.activeLayer.view.update();
       this.projectService.canvas.view.onClick = (e: paper.MouseEvent) => {
-       // this.ngZone.run(() => this.onCanvasClicked(e));
+        this.ngZone.run(() => this.onCanvasClicked(e));
       };
       this.sharedService.canvas.height = this._CANVAS.height;
       this.sharedService.canvas.width = this._CANVAS.height;
@@ -149,17 +151,29 @@ addShape(type: string) {
   switch (type) {
     case 'triangle':
       this.geometrics.triangle(this.projectService.canvas.view.center.x, this.projectService.canvas.view.center.y);
+      this.shapeSelectionOpen = false;
       break;
     case 'rectangle':
       this.geometrics.rectangle(150, 150, this.projectService.canvas.view.center.x - 75, this.projectService.canvas.view.center.y - 75);
+      this.shapeSelectionOpen = false;
       break;
     case 'circle':
       this.geometrics.circle(this.projectService.canvas.view.center.x, this.projectService.canvas.view.center.y, 50);
+      this.shapeSelectionOpen = false;
       break;
     case 'line':
       this.geometrics.line(250, 500);
+      this.shapeSelectionOpen = false;
       break;
   }
+}
+
+rotateItem(){
+  this.openRotationHandle = !this.openRotationHandle
+}
+
+toggleshapeSelectionOpen(){
+  this.shapeSelectionOpen = !this.shapeSelectionOpen;
 }
 
 @HostListener('window:keydown', ['$event'])
@@ -369,12 +383,12 @@ addShape(type: string) {
   changeTextFontFamily(event) {
     const item = this.projectService.itemFocus;
     const text = item.lastChild as paper.PointText;
-    let newFont = this.sharedService.fonts.find((el) => el.fontFamilyMerged === event.value + ' ' + text.data.fontSubfamily);
+    let newFont = this.sharedService.defaultFonts.find((el) => el.fontFamilyMerged === event.detail.value + ' ' + text.data.fontSubfamily);
     if (!newFont) {
-      newFont = this.sharedService.fonts.find((el) => el.fontFamilyMerged === event.value + ' Regular');
+      newFont = this.sharedService.defaultFonts.find((el) => el.fontFamilyMerged === event.detail.value + ' Regular');
       text.fontWeight = 'normal';
     }
-
+    console.log(newFont);
     text.fontFamily = newFont.fontFamilyMerged;
     text.data.fontFamily = newFont.fontFamily;
     text.data.fontSubfamily = newFont.fontSubfamily;
@@ -407,7 +421,7 @@ addShape(type: string) {
     }
     text.data.fontFamilyMerged = text.data.fontFamily + ' ' + text.data.fontSubfamily;
     text.fontFamily = text.data.fontFamilyMerged;
-    this.projectService.updateTextSelectionHelper(item);
+    this.projectService.updateTextSelectionHelper(item);    
   }
 
   lockRatio() {
@@ -495,12 +509,12 @@ addShape(type: string) {
     const text = new paper.PointText(this.projectService.canvas.view.center);
     text.justification = 'left';
     text.fillColor = null;
-    text.content = 'sampleText';
+    text.content = 'Your Text...';
     text.fontFamily = 'Arial Regular';
     text.data.fontFamily = 'Arial';
     text.data.fontSubfamily = 'Regular';
     text.data.fontFamilyMerged = 'Arial Regular';
-    text.fontSize = '64px';
+    text.fontSize = '14px';
 
     text.strokeWidth = 1;
     text.strokeCap = 'butt';

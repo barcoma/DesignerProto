@@ -23,6 +23,8 @@ import { File } from '@ionic-native/file/ngx';
 import { EditTextDialogComponent } from './dialogs/editText.dialog';
 import { MaterialModule } from './material.module';
 import { AddImageModalComponent } from './modals/add-image/add-image.modal';
+import { PipesModule } from './pipes/pipes.module';
+
 
 Amplify.configure(awsconfig);
 
@@ -51,7 +53,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatIconModule
+    MatIconModule,
+    PipesModule,
+
   ],
   providers: [
     StatusBar,

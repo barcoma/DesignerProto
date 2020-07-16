@@ -18,57 +18,130 @@
         </div>
       </ion-col>
       <ion-col size="3" size-md="1">
-        <ion-button class="ion-no-margin action-button" (click)="pictureMethod('increeseSize')">
-          <ion-icon name="add-circle-outline"></ion-icon>
-        </ion-button>
-        <ion-button class="ion-no-margin action-button" (click)="pictureMethod('decreeseSize')">
-          <ion-icon name="remove-circle-outline"></ion-icon>        
-        </ion-button>
-        <ion-range 
-          pin min="0" 
-          max="359" 
-          step="1" 
-          color="secondary"
-          style="padding-top: 30px; --height: 30px"
-          [disabled]="projectService.selectedTopLevelItems().length !== 1"
-          [(ngModel)]="projectService.rotation"
-          (keydown)="$event.stopPropagation()"
-          (ionChange)="projectService.rotateSelectedItems($event)">
-          <ion-label slot="start">0</ion-label>
-          <ion-label slot="end">359</ion-label>
-        </ion-range>
-        <ion-button class="ion-no-margin action-button" (click)="openAddImageModal()">
-          <ion-icon name="close-circle-outline"></ion-icon>        
-        </ion-button>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="6">
+            <ion-button class="ion-no-margin" (click)="pictureMethod('increeseSize')">
+              <ion-icon name="add-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button class="ion-no-margin" (click)="pictureMethod('decreeseSize')">
+              <ion-icon name="remove-circle-outline"></ion-icon>        
+            </ion-button>
+          </ion-col>
+          <!-- <ion-col size-sm="12" size-md="6">
+            <ion-button class="ion-no-margin" (click)="pictureMethod('mirrorX')">
+              <ion-icon name="swap-horizontal"></ion-icon>        
+            </ion-button>
+          </ion-col>
+          <ion-col size-sm="12" size-md="6">
+            <ion-button class="ion-no-margin" (click)="pictureMethod('mirrorY')">
+              <ion-icon name="swap-vertical"></ion-icon>        
+            </ion-button>
+          </ion-col> -->
+          <ion-col size="12">
+            <ion-button class="ion-no-margin" (click)="rotateItem()">
+              <ion-icon name="repeat-outline"></ion-icon>        
+            </ion-button>
+          </ion-col>
+          <ion-col size="12">
+            <ion-button class="ion-no-margin" (click)="pictureMethod('delete')">
+              <ion-icon name="trash-outline"></ion-icon>        
+            </ion-button>
+          </ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row class="ion-align-items-center rotation-row ion-text-center" *ngIf="openRotationHandle">
+      <ion-col size="6" offset="3">
+        <ion-range 
+            class="ion-no-padding"
+            pin min="0" 
+            max="359" 
+            step="1" 
+            ticks="true" value="0"  
+            color="secondary"
+            [disabled]="projectService.selectedTopLevelItems().length !== 1"
+            [(ngModel)]="projectService.rotation"
+            (keydown)="$event.stopPropagation()"
+            (ionChange)="projectService.rotateSelectedItems($event)">
+            <ion-label slot="start">0</ion-label>
+            <ion-label slot="end">359</ion-label>
+          </ion-range>
+          <ion-button size="small" (click)="this.projectService.rotateSelectedItems(90)()">
+            <ion-icon slot="icon-only" name="arrow-redo-outline"></ion-icon>
+          </ion-button>
+          <ion-button size="small" (click)="this.projectService.rotateSelectedItems(-90)()">
+            <ion-icon slot="icon-only" name="arrow-undo-outline"></ion-icon>
+          </ion-button>
+          <ion-button size="small" (click)="rotateItem()">
+            <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>
+          </ion-button>
+      </ion-col>
+      <ion-col size="2">
+        
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!openRotationHandle">
       <ion-col size-sm="8" offset-sm="2" size-md="6" offset-md="3" class="ion-text-center">
         <h3 class="ion-no-margin">{{descr}}</h3>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-margin-top">
+    <ion-row class="last-row ion-margin-top">
       <ion-col size-sm="4" size-md="1" offset-md="4" class="ion-no-padding">
         <ion-button class="ion-no-margin action-button" (click)="genText()">
           <ion-icon name="text-outline"></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col size-sm="4" size-md="1" class="ion-no-padding">
-        <ion-button class="ion-no-margin action-button" (click)="onClick()">
+        <ion-button class="ion-no-margin action-button" (click)="openAddImageModal()">
           <ion-icon name="image-outline"></ion-icon>        
         </ion-button>
       </ion-col>
       <ion-col size-sm="4" size-md="1" class="ion-no-padding">
-        <ion-button class="ion-no-margin action-button" (click)="addShape('triangle')">
+        <div *ngIf="shapeSelectionOpen" class="shape-selection">
+          <ion-button class="ion-no-margin" (click)="addShape('triangle')">
+            <ion-icon name="triangle-outline"></ion-icon>        
+          </ion-button> 
+          <ion-button class="ion-no-margin" (click)="addShape('rectangle')">
+            <ion-icon name="tablet-landscape-outline"></ion-icon>        
+          </ion-button> 
+          <ion-button class="ion-no-margin" (click)="addShape('circle')">
+            <ion-icon name="ellipse-outline"></ion-icon>          
+          </ion-button>
+        </div>
+        <ion-button class="ion-no-margin action-button" (click)="toggleshapeSelectionOpen()">
           <ion-icon name="shapes-outline"></ion-icon>        
         </ion-button>
       </ion-col>
       <ion-col size-sm="4" size-md="1" class="ion-no-padding">
-        <ion-button class="ion-no-margin action-button last" (click)="onClick()">
+        <ion-button class="ion-no-margin action-button last" (click)="generateBarcode()">
           <ion-icon name="checkmark-circle-outline"></ion-icon>        
         </ion-button>
       </ion-col>
     </ion-row>
+    <!-- <ion-row *ngIf="projectService.itemFocus?.data.type === 'text'">
+          <span style="color: rgba(0,0,0,0.7); font-size: 12px;">fontFamily'</span><br/>
+          <ion-select [(ngModel)]="projectService.itemFocus?.lastChild.data.fontFamily"
+                      (ionChange)="changeTextFontFamily($event)">
+              <ion-select-option
+                      *ngFor="let font of (sharedService.fonts | uniqueFont: 'fontFamily')"
+                      [ngStyle]="{'font-family': font.fontFamilyMerged}"
+                      [value]="font.fontFamily">{{font.fontFamily}}
+              </ion-select-option>
+          </ion-select>
+<span
+style="color: rgba(255,255,255,0.7); font-size: 12px;">fontSubfamily</span><br/>
+          <ion-select 
+            [(ngModel)]="projectService.itemFocus?.lastChild.data.fontSubfamily"
+            (ionChange)="changeTextFontSubfamily()"
+            >
+              <ion-select-option
+                *ngFor="let font of sharedService.fonts | filter: 'fontFamily': projectService.itemFocus?.lastChild.data.fontFamily"
+                [value]="font.fontSubfamily">{{font.fontSubfamily}}
+              </ion-select-option>
+          </ion-select>
+  </ion-row> -->
   </ion-grid>
 
 </ion-content>
