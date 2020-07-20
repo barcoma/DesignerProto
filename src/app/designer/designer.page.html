@@ -11,13 +11,13 @@
 <ion-content>
   <ion-grid class="ion-no-padding">
     <ion-row>
-      <ion-col size="8" offset="1" size-md="6" offset-md="3" class="ion-padding img-col">
+      <ion-col size="8" size-md="6" offset-md="3" class="ion-padding img-col">
         <div #ImageWrapper class="img-wrapper ion-align-items-center">
           <img #ProductImage [src]="img">
           <canvas #canvas></canvas>
         </div>
       </ion-col>
-      <ion-col class="function-button-col" size="3" size-md="1">
+      <ion-col class="function-button-col" size="4" size-md="1">
         <ion-row class="ion-align-items-center">
           <ion-col size="6">
             <ion-button [disabled]="projectService.selectedTopLevelItems().length !== 1"  class="dual-button-l function-button big-icon" (click)="pictureMethod('increeseSize')">
@@ -53,7 +53,7 @@
             </ion-button>
           </ion-col>
           <ion-col size="6" offset="6">
-            <ion-button [disabled]="projectService.selectedTopLevelItems().length !== 1" color="danger" (click)="pictureMethod('delete')">
+            <ion-button class="full-width-button" [disabled]="projectService.selectedTopLevelItems().length !== 1" color="danger" (click)="pictureMethod('delete')">
               <ion-icon name="trash-outline"></ion-icon>        
             </ion-button>
           </ion-col>
@@ -62,7 +62,7 @@
     </ion-row>
     <ion-row class="ion-align-items-center rotation-row ion-text-center" *ngIf="openRotationHandle">
       <ion-col size="6" offset="3">
-        <ion-range 
+        <ion-range  
             class="ion-no-padding"
             pin min="0" 
             max="359" 
@@ -71,7 +71,6 @@
             color="secondary"
             [disabled]="projectService.selectedTopLevelItems().length !== 1"
             [(ngModel)]="projectService.rotation"
-            (keydown)="$event.stopPropagation()"
             (ionChange)="projectService.rotateSelectedItems($event)">
             <ion-label class="rotation-label" slot="start">0</ion-label>
             <ion-label class="rotation-label" slot="end">359</ion-label>
@@ -95,9 +94,9 @@
         <h3 class="ion-no-margin">{{descr}}</h3>
       </ion-col>
     </ion-row>
-    <ion-row  *ngIf="isTextEditOpen">
-      <ion-col size-sm="6" size-md="2" offset-md="4">
-          <ion-label>Font</ion-label>
+    <ion-row *ngIf="isTextEditOpen">
+      <ion-col class="ion-padding-start" size-sm="6" size-md="2" offset-md="4">
+          <ion-label class="text-edit-label" position="floating">Font</ion-label>
           <ion-select [(ngModel)]="projectService.itemFocus?.lastChild.data.fontFamily"
           (ionChange)="changeTextFontFamily($event)">
             <ion-select-option
@@ -107,8 +106,8 @@
             </ion-select-option>
           </ion-select>        
       </ion-col>
-      <ion-col size-sm="6" size-md="2">
-        <ion-label>Style</ion-label>
+      <ion-col class="ion-padding-end" size-sm="6" size-md="2">
+        <ion-label class="text-edit-label">Style</ion-label>
         <ion-select 
           [(ngModel)]="projectService.itemFocus?.lastChild.data.fontSubfamily"
           (ionChange)="changeTextFontSubfamily()"
@@ -121,13 +120,13 @@
       </ion-col>
     </ion-row>
     <ion-row class="last-row ion-margin-top">
-      <ion-col *ngIf="isTextEditOpen" size="9" size-md="2" offset-md="4">
-          <ion-label position="floating">Change Text</ion-label>
+      <ion-col class="ion-padding-start" *ngIf="isTextEditOpen" size="6" size-md="2" offset-md="4">
+          <ion-label  class="text-edit-label">Change Text</ion-label>
           <ion-input class="new-text-input" placeholder="New Text"  [(ngModel)]="newTextInput"></ion-input>
       </ion-col>
 
-      <ion-col *ngIf="isTextEditOpen" size-sm="4" size-md="1" push-md="1" class="ion-no-padding">
-        <ion-button class="ion-no-margin action-button last" (click)="changeText()">
+      <ion-col class="change-text-col ion-padding-end" *ngIf="isTextEditOpen" size-sm="6" size-md="2">
+        <ion-button class="ion-no-margin" (click)="changeText()">
           <ion-icon name="checkmark-circle-outline"></ion-icon>        
         </ion-button>
       </ion-col>

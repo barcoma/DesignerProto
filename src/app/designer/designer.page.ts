@@ -80,7 +80,6 @@ export class DesignerPage{
   }
 
   ionViewDidEnter(){
-    console.log('view loaded');
     this._CANVAS = this.canvasEl.nativeElement;
 
     setTimeout(() => {
@@ -99,7 +98,6 @@ export class DesignerPage{
 
     this.initialiseCanvas();
 
-    this.drawCircle();
   }
 
   initialiseCanvas(){
@@ -139,17 +137,6 @@ scaleCanvas(){
 clearCanvas(){
    this._CONTEXT.clearRect(0, 0, this._CANVAS.width, this._CANVAS.height);
    this.setupCanvas();
-}
-
-drawCircle(){
-   this.clearCanvas();
-   this._CONTEXT.beginPath();
-   // x, y, radius, startAngle, endAngle
-   const radius = this._CANVAS.height > this._CANVAS.width ? (this._CANVAS.width / 2) : this._CANVAS.height / 2;
-   this._CONTEXT.arc(this._CANVAS.width / 2, this._CANVAS.height / 2, radius, 0, 2 * Math.PI);
-   this._CONTEXT.lineWidth = 1;
-   this._CONTEXT.strokeStyle = '#000';
-   this._CONTEXT.stroke();
 }
 
 addShape(type: string) {
@@ -248,7 +235,6 @@ toggleshapeSelectionOpen(){
       if (
         this.projectService.selectedTopLevelItems()[0].data.type === 'text'
       ) {
-        // Need to deselect the item else you open another dialog with enter on text-input
         const selectedItem = this.projectService.selectedTopLevelItems()[0];
         this.projectService.openEditTextDialog(selectedItem, this.newTextInput);
       }
@@ -283,13 +269,6 @@ toggleshapeSelectionOpen(){
     event.stopPropagation();
   }
 
-  groupItems() {
-    this.projectService.groupSelectedItems();
-  }
-
-  ungroupItems() {
-    this.projectService.ungroupSelectedItems();
-  }
 
   pictureMethod(func: string, factor?: number) {
     const scalingFactor = this.sharedService.settings.scalingFactor;

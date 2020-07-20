@@ -33,14 +33,12 @@ export class HomePage {
 
   todos: Array<any>;
   products: Array<any>;
-  loggedIn: boolean;
   MockProducts: any;
 
   onAuthEvent(payload) {
     console.log(payload.event);
     switch (payload.event){
       case 'signIn':
-        this.loggedIn = true;
         break;
       case 'signOut':
         this.router.navigate(['/login']);
@@ -49,8 +47,6 @@ export class HomePage {
   }
 
   async ionViewWillEnter() {
-    await this.isUserLoggedIn();
-
     this.apiService.ListProducts().then((evt) => {
       this.products = evt.items;
       console.log(this.products);
@@ -80,28 +76,15 @@ export class HomePage {
   openDesigner(id){
     const navigationExtras: NavigationExtras = {
       state: {
-        img: this.MockProducts[id].img,
-        name: this.MockProducts[id].name,
-        zoneX: this.MockProducts[id].zoneX,
-        zoneY: this.MockProducts[id].zoneY,
-        zoneXScale: this.MockProducts[id].zoneXScale,
-        zoneYScale: this.MockProducts[id].zoneYScale
+        img: this.products[id].img,
+        name: this.products[id].name,
+        zoneX: this.products[id].zoneX,
+        zoneY: this.products[id].zoneY,
+        zoneXScale: this.products[id].zoneXScale,
+        zoneYScale: this.products[id].zoneYScale
       }
     };
     this.router.navigate(['designer'], navigationExtras);
-  }
-
-async testUserLoggedIn(){
-  console.log('Is User Logged In? ', this.loggedIn);
-}
-  // TODO ->
-isUserLoggedIn(){
-    Auth.currentAuthenticatedUser()
-    .then((resolve) => {
-      this.loggedIn = true;
-    },
-          (reject) => {this.loggedIn =  false; }
-    );
   }
 
   async logOut() {
@@ -120,7 +103,6 @@ isUserLoggedIn(){
           text: 'Sign out',
           handler: () => {
             Auth.signOut();
-            this.loggedIn = false;
           }
         }
       ]

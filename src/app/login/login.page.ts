@@ -13,11 +13,14 @@ import { AlertController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
+  isLoggedIn = false;
+
   constructor(
     private apiService: APIService,
     public router: Router,
     public alertController: AlertController
   ) {
+    this.updateUser();
     Hub.listen('auth', (data) => {
       const { payload } = data;
       this.onAuthEvent(payload);
@@ -25,16 +28,33 @@ export class LoginPage implements OnInit {
    }
 
   ngOnInit() {
+
   }
 
-  onAuthEvent(payload) {
-    console.log(payload.event);
-    switch (payload.event){
-      case 'signIn':
-        this.router.navigate(['/home'])
-        break;
-      case 'signOut':
-        break;
-    }
+async updateUser(){
+  try {
+    let user = await Auth.currentAuthenticatedUser();
+    this.setUserLoggedIn(user);
+  } catch {
+    this.setUserLoggedIn(null);
   }
+}
+
+setUserLoggedIn(user){
+  if (user != null){
+    this.router.navigate(['/home']);
+  }
+  console.log('not logged in');
+}
+
+onAuthEvent(payload) {
+  console.log(payload.event);
+  switch (payload.event){
+    case 'signIn':
+      this.router.navigate(['/home']);
+      break;
+    case 'signOut':
+      break;
+  }
+}
 }

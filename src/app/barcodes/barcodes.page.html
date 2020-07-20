@@ -13,7 +13,7 @@
       Ready for Personalization:
     </ion-list-header>
 
-    <ion-item *ngFor="let b of barcodes">
+    <ion-item *ngFor="let b of barcodes" (click)="selectListItem(b)">
       <ion-avatar slot="start">
         <img [src]="b.img">
       </ion-avatar>
@@ -23,4 +23,14 @@
       </ion-label>
     </ion-item>
   </ion-list>
+  
+  <ion-card *ngIf="listItemSelected">
+    <img src="../../assets/img/barcode.jpg" />
+    <ion-card-header>
+      <ion-card-title>{{selectedName}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{selectedDescr}}
+    </ion-card-content>
+  </ion-card>
 </ion-content>

@@ -7,6 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./barcodes.page.scss'],
 })
 export class BarcodesPage implements OnInit {
+  listItemSelected = false;
+  selectedName: any;
+  selectedDescr: any;
   barcodes = [
     {
       name: 'Creme',
@@ -43,6 +46,15 @@ export class BarcodesPage implements OnInit {
   createBarcode(n, d, i){
     console.log(n, d, i);
     this.barcodes.push({name: n, descr: d, img: i});
+  }
+
+  selectListItem(e){
+    console.log(e);
+    if (this.listItemSelected === false){
+      this.listItemSelected = !this.listItemSelected;
+    }
+    this.selectedName = e.name;
+    this.selectedDescr = e.descr;
   }
 
 }

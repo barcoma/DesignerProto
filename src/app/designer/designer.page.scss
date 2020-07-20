@@ -59,7 +59,7 @@ canvas{
     margin-left: -15px;
     width: 0;
     height: 0;
-    border-top: solid 15px #3171e0;
+    border-top: solid 15px #3880ff;
     border-left: solid 15px transparent;
     border-right: solid 15px transparent;
 }
@@ -67,6 +67,12 @@ canvas{
 .last{
     border-right: none !important;
     --background: green;
+}
+
+.change-text-col{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .rotation-row{
@@ -144,4 +150,14 @@ ion-select{
 
 .full-width-button{
     width: 100%;
+}
+
+.text-edit-label{
+    margin-left: 5%;
+}
+
+.change-text-col {
+    ion-button{
+        margin-top: 5%;
+    }
 }

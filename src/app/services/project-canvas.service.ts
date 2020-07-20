@@ -116,25 +116,6 @@ export class ProjectCanvasService {
     item.lastChild['content'] = content;
     item.data.description = content;
     this.updateTextSelectionHelper(item);
-    // this.ngZone.run(() => {
-    //   const dialogRef = this.dialog.open(EditTextDialogComponent, {
-    //     width: '250px',
-    //     data: { text: item.lastChild['content'] },
-    //     disableClose: false,
-    //   });
-
-    //   dialogRef.afterClosed().subscribe((result) => {
-    //     if (result) {
-    //       if (result.text !== '') {
-    //         item.lastChild['content'] = result.text;
-    //         item.data.description = result.text;
-    //         this.updateTextSelectionHelper(item);
-    //       } else {
-    //         this.openEditTextDialog(item);
-    //       }
-    //     }
-    //  });
-    //});
   }
 
   /**
@@ -162,12 +143,6 @@ export class ProjectCanvasService {
       if (target.data.isDragged) {
         delete target.data.isDragged;
         return false;
-      }
-
-      if (event.modifiers.shift && target.selected) {
-        target.selected = false;
-      } else {
-        this.selectItem(target, event.modifiers.shift);
       }
     };
 
@@ -265,8 +240,7 @@ export class ProjectCanvasService {
   }
 
   rotateSelectedItems(value: CustomEvent<{ value: number }> | MatSelectChange | number) {
-    console.log(typeof value);
-    if (!this.noItemsSelected() && !this.multiSelect()) {
+    if (!this.noItemsSelected()) {
       for (const item of this.selectedTopLevelItems()) {
         const prevRotation = item.data.prevRotation || 0;
         let degree = 0;
@@ -341,29 +315,10 @@ export class ProjectCanvasService {
     }
   }
 
-  alignSelectedItems(axis: 'X' | 'Y') {
-    const selectedItems = this.selectedTopLevelItems();
-
-    let newPosition: number;
-    if (selectedItems.length >= 2) {
-      newPosition = selectedItems.map((c) => c.bounds['center' + axis]).reduce((m, p) => (m += p / selectedItems.length), 0);
-    } else {
-      newPosition = this.canvas.view.bounds['center' + axis];
-    }
-    for (const child of selectedItems) {
-      child.position[axis.toLowerCase()] = newPosition;
-      child.data.center = newPosition;
-    }
-  }
-
   clearCanvas() {
     this.canvas.activeLayer.remove();
     this.canvas.addLayer(new Layer()).activate();
     this.itemFocus = undefined;
-  }
-
-  clearName() {
-    this.projectName = '';
   }
 
   activeLayer(): paper.Layer | undefined {
